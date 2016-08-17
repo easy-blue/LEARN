@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FROM表单验证</title>
+</head>
+<style>
+.allstyle{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	background-color: #000;
+	font-family: '微软雅黑';
+}
+#form{
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	left: 50%;
+	margin-top: 50px;
+	margin-left: -200px;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 50px;
+	background-color: #fff;
+	z-index: 2;
+}
+#form input,#form  textarea{
+	width: 250px;
+	font-size: 14px;
+	line-height: 20px;
+	border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+}
+#form button{
+	width: 70px;
+	font-size: 14px;
+}
+</style>
+<body>
+	<div class="allstyle">
+		<form id="form">
+			<label for="account">账&emsp;&emsp;号：</label>
+			<input type="text" id="account" maxlength="12" autofocus placeholder="英文和数字,长度为3-12位" pattern="[A-Za-z0-9]{3,12}" title="英文和数字,长度为3-12位"><br/>
+			<label for="tel">电&emsp;&emsp;话：</label>
+			<input type="tel" class="required" id="tel" required><br/>
+			<label for="unit">工作单位：</label>
+			<input type="text" class="required" id="unit" required><br/>
+			<label for="address">地&emsp;&emsp;址：</label>
+			<textarea type="text" class="required" id="address" required></textarea><br/>
+			<button type="submit" class="required" value="提交">提交</button>
+			<button type="button" class="required" value="重置">重置</button>
+		</form>
+	</div>
+	<script>
+		
+	</script>
+</body>
+</html>
