@@ -13,23 +13,26 @@ html,body{
 	width: 100%;
 	height: 100%;
 	position: relative;
-	text-align: center;
 	background-color: #222;
 	font-family: '微软雅黑';
 }
 #form{
 	position: absolute;
-	width: 400px;
-	height: 400px;
+	min-width: 340px;
+	min-height: 340px;
 	left: 50%;
 	top: 50%;
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 50px;
+	text-align: center;
 	margin: -200px 0 0 -200px;
-	padding: 50px 0 0;
+	padding: 50px 30px;
 	background-color: #fff;
     border-radius: 5%;
+}
+#form div{
+    text-align: left;
 }
 #form input,#form textarea{
 	width: 250px;
@@ -47,21 +50,23 @@ html,body{
 <body>
 	<div class="allstyle">
 		<form id="form">
-			<label for="account">账&emsp;&emsp;号：</label>
-			<input type="text" id="account" maxlength="12" autofocus placeholder="英文和数字,长度为3-12位" pattern="[A-Za-z0-9]{3,12}" title="英文和数字,长度为3-12位"><br/>
-			<label for="tel">电&emsp;&emsp;话：</label>
-			<input type="tel" class="required" id="tel" ><br/>
-			<label for="unit">工作单位：</label>
-			<input type="text" class="required" id="unit" ><br/>
-			<label for="address">地&emsp;&emsp;址：</label>
-			<textarea type="text" class="required" id="address" ></textarea><br/>
+			<div>
+				<label for="account">账&emsp;&emsp;号：</label>
+				<input type="text" id="account" maxlength="12" autofocus placeholder="英文和数字,长度为3-12位" pattern="[A-Za-z0-9]{3,12}" title="英文和数字,长度为3-12位"><br/>
+				<label for="tel">电&emsp;&emsp;话：</label>
+				<input type="tel" class="required" id="tel" required><br/>
+				<label for="unit">工作单位：</label>
+				<input type="text" class="required" id="unit" required><br/>
+				<label for="address">地&emsp;&emsp;址：</label>
+				<textarea type="text" class="required" id="address" required></textarea>
+			</div>
 			<button id="vail" type="button" value="提交">提交</button>
-			<button type="button" value="重置">重置</button>
+			<!-- <button type="button" value="重置">重置</button> -->
 		</form>
 	</div>
 	<script>
+		// 验证其必须由英文和数字组成,长度为3-12位
 		var account=document.getElementById('account');
-		var requireds=document.getElementsByClassName('required');
 		var str = /^[A-Za-z0-9]{3,18}/;
 		account.oninput=function(e) {
 			if(this.value.length<3||this.value.length>12){
@@ -72,6 +77,8 @@ html,body{
 				alert("英文和数字");
 			}
 		};
+		// 验证required必填
+		var requireds=document.getElementsByClassName('required');
 		for (var i = 0 ; i < requireds.length; i++) {
 			requireds[i].onblur=function(){
 				var span=document.getElementById('span'+this.id);
@@ -79,20 +86,21 @@ html,body{
 					if(span==undefined||span==""||span==null){
 						var Newspan = document.createElement("span");
 						Newspan.id="span"+this.id;
-						Newspan.innerHTML="此项必填";
-						 this.parentNode.insertBefore(Newspan,this.nextSibling);
+						Newspan.innerHTML="&emsp;必填";
+						Newspan.style.color="red";
+						this.parentNode.insertBefore(Newspan,this.nextSibling);
 						return;
 					}
-					span.innerHTML="此项必填";
+					span.innerHTML="&emsp;必填";
 					return;
 				}
 				if(span==undefined||span==""||span==null){
 					return;
 				}
-
 				span.innerHTML="";
 			}
 		}
+		// 验证提交
 		var form=document.getElementById('vail');
 		form.onclick=function(){
 			console.log("1");
@@ -103,14 +111,14 @@ html,body{
 					if(span==undefined||span==null){
 						var Newspan = document.createElement("span");
 						Newspan.id="span"+requireds[i].id;
-						Newspan.innerHTML="此项必填";
-						 requireds[i].parentNode.insertBefore(Newspan,requireds[i].nextSibling);
-						 flag=false;
-						 continue;
-
+						Newspan.innerHTML="&emsp;必填";
+						Newspan.style.color="red";
+						requireds[i].parentNode.insertBefore(Newspan,requireds[i].nextSibling);
+						flag=false;
+						continue;
 					}
 					flag=false;
-					span.innerHTML="此项必填";
+					span.innerHTML="&emsp;必填";
 					continue;
 				}
 			}
