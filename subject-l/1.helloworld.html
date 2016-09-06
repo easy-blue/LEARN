@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hello world</title>
+	<style>
+	div{
+		font-size: 16px;
+		line-height: 1.5;
+		word-break: break-all;
+	}
+	#show{
+		width: 500px;
+		min-height:120px;
+		background-color: #f1f1f1;
+	}
+	#text{
+		width:495px;
+		min-height:80px;
+	}
+	</style>
+	<script>
+	window.onload=function () {
+		var otxt=document.getElementById('text');
+		var oshow=document.getElementById('show');
+		var abtn=document.getElementsByTagName('button');
+		abtn[0].onclick=function (){
+			console.log(otxt.value);
+			oshow.innerHTML=otxt.value;
+		}
+	}
+	</script>
+</head>
+<body>
+	<div>
+		<p id="show"></p>
+		<textarea id="text" placeholder="请输入"></textarea><br>
+		<button>输入</button>
+	</div>
+</body>
+</html>

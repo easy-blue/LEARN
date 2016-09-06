@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Calculator</title>
+<style>
+.tablet table{width: 100%;border: 0;padding: 0;border-collapse: collapse;}
+.tablet td{padding: 0;}
+html,body{width: 100%;height: 100%;margin: 0;position: relative;}
+div{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 250px;
+	min-height: 350px;
+	margin: -250px 0 0 -125px;
+	font-size: 16px;
+	line-height: 1.5;
+	word-break: break-all;
+	color:#555;
+	text-align:center;
+	font-family: 'Arial,微软雅黑';
+	padding: 20px;
+	background-color:#f1f1f1;
+}
+#text1,#per,#show{
+	width: 160px;
+	min-height:30px;
+	font-size: 20px;
+	text-align: right;
+	padding: 10px;
+	margin: 0 0 20px 0;
+	background-color: #fff;
+	border: none;
+	box-shadow: none;
+}
+#per{width: 40px;}
+table input{
+	width: 60px;
+	height: 40px;
+}
+</style>
+<script>
+window.onload=function () {
+	var oOn=document.getElementById('on');
+	var oOff=document.getElementById('off');
+	var oClear=document.getElementById('clear');
+	var back=document.getElementById('back');
+	var show=document.getElementById('show');
+	var oText1=document.getElementById('text1');
+	var oPer=document.getElementById('per');
+	var oEqual=document.getElementById('equal');
+	var aNum=document.getElementsByClassName('num');
+	var aOper=document.getElementsByClassName('oper');
+	var flag=false;
+
+	function commond (a)
+	{
+		var clear=false;
+		show.value='0';
+		//数字键
+		for (var i = 0; i < aNum.length; i++)
+		{
+			aNum[i].onclick=function  ()
+			{
+				if (!flag) {return};	/* 关机则退出*/
+				if (clear)			/*关清屏*/
+				{
+					clear=false;
+				};
+				//indexOf() 返回某个指定的字符串值在字符串中首次出现的位置。如果要检索的字符串值没有出现，则该方法返回 -1
+				if (show.value.indexOf('.')!=-1)	/*只含有.则退出*/
+				{
+					if (this.value=='.') {return;}
+				};
+				if (oPer.value&&show.value&&oText1.value=='')	/*oText1为空时，show赋值给oText1*/
+				{
+					oText1.value=show.value;
+					show.value='';
+				};
+				var re=/^0\.{1}\d+$/;
+				var re1=/^([0]\d+)$/;
+				show.value+=this.value;
+				if (re.test(show.value)) {return};	/**/
+				if (re1.test(show.value))
+				{
+					show.value=this.value;
+				};
+			}
+		};
+		// 操作符
+		for (var j = 0; j < aOper.length; j++)
+		{
+			aOper[j].onclick=function  ()
+			{
+				if (show.value&&oPer.value&&oText1.value)	/*符合运算条件先计算*/
+				{
+					var n=eval(oText1.value+oPer.value+show.value);
+					show.value=n;
+					oText1.value='';
+				};
+				oPer.value=this.value;	/*不符合运算条件更新操作符*/
+			}
+		}
+		// 等号
+		oEqual.onclick=function ()
+		{
+			if (show.value==''&&oPer.value==''&&oText1.value=='') {return};	/*没有输入则退出*/
+			var n=eval(oText1.value+oPer.value+show.value);
+			show.value=n;
+			oText1.value='';
+			oPer.value='';
+			clear=true;		/*开清屏*/
+		}
+		// 清屏
+		oClear.onclick=function ()
+		{
+			if (!flag) {return};
+			show.value='0';
+			oText1.value='';
+			oPer.value='';
+		}
+		// 退格
+		back.onclick=function ()
+		{
+			show.value=show.value.slice(0,-1);
+		}
+	}
+	// 开机
+	oOn.onclick=function ()
+	{
+		flag=true;
+		commond(flag);
+	}
+	// 关机
+	oOff.onclick=function ()
+	{
+		flag=false;
+		commond(flag);
+		show.value='';
+	}
+}
+</script>
+</head>
+<body>
+	<div>
+		<input type="text" id="text1"  style="display:none" />
+		<input type="text" id="show" />
+		<input type="text" id="per" />
+		<table class="tablet">
+			<tr>
+				<td><input type="button" value="ON" id="on" /></td>
+				<td><input type="button" value="OFF" id="off" /></td>
+				<td><input type="button" value="CLEAR" id="clear" /></td>
+				<td><input type="button" value="BACK" id="back" /></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="7" class="num" /></td>
+				<td><input type="button" value="8" class="num" /></td>
+				<td><input type="button" value="9" class="num" /></td>
+				<td><input type="button" value="/" class="oper" id="divide" /></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="4" class="num" /></td>
+				<td><input type="button" value="5" class="num" /></td>
+				<td><input type="button" value="6" class="num" /></td>
+				<td><input type="button" value="*" class="oper" id="multiply" /></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="1" class="num" /></td>
+				<td><input type="button" value="2" class="num" /></td>
+				<td><input type="button" value="3" class="num" /></td>
+				<td><input type="button" value="-" class="oper" id="subtract" /></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="0" class="num" /></td>
+				<td><input type="button" value="." class="num" /></td>
+				<td><input type="button" value="+" class="oper" id="Add" /></td>
+				<td><input type="submit" value="=" id="equal" /></td>
+			</tr>
+		</table>
+		<p id="tips">欢迎使用计算器！</p>
+	</div>
+</body>
+</html>
